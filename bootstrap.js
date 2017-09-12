@@ -51,6 +51,18 @@ function unhook_window(wnd) {
 	}
 }
 
+var windowListener = {
+	onOpenWindow: function (aWindow) {
+		let domWindow = aWindow.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIDOMWindowInternal || Ci.nsIDOMWindow);
+		domWindow.addEventListener("load", function () {
+			domWindow.removeEventListener("load", arguments.callee, false);
+			hook_window(domWindow);
+		}, false);
+	},
+	onCloseWindow: function (aWindow) {},
+	onWindowTitleChange: function (aWindow, aTitle) {}
+};
+
 function install() {
 	console.log('nosafelinks: install');
 }
@@ -65,7 +77,7 @@ function startup() {
 		let wnd = enumerator.getNext().QueryInterface(Ci.nsIDOMWindow);
 		hook_window(wnd);
 	}
-	/* TODO: add WindowMediator observer */
+	Services.wm.addListener(windowListener);
 }
 
 function shutdown() {
@@ -76,5 +88,5 @@ function shutdown() {
 		let wnd = enumerator.getNext().QueryInterface(Ci.nsIDOMWindow);
 		unhook_window(wnd);
 	}
-	/* TODO: remove WindowMediator observer */
+	Services.wm.removeListener(windowListener);
 }
