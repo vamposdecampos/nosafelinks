@@ -1,5 +1,7 @@
-Components.utils.import('resource://gre/modules/Services.jsm');
-Components.utils.importGlobalProperties(["URL"]);
+const Cu = Components.utils;
+const Ci = Components.interfaces;
+Cu.import('resource://gre/modules/Services.jsm');
+Cu.importGlobalProperties(["URL"]);
 
 
 function hook_window(wnd) {
@@ -60,7 +62,7 @@ function startup() {
 
 	let enumerator = Services.wm.getEnumerator('mail:3pane');
 	while (enumerator.hasMoreElements()) {
-		let wnd = enumerator.getNext().QueryInterface(Components.interfaces.nsIDOMWindow);
+		let wnd = enumerator.getNext().QueryInterface(Ci.nsIDOMWindow);
 		hook_window(wnd);
 	}
 	/* TODO: add WindowMediator observer */
@@ -71,7 +73,7 @@ function shutdown() {
 
 	let enumerator = Services.wm.getEnumerator('mail:3pane');
 	while (enumerator.hasMoreElements()) {
-		let wnd = enumerator.getNext().QueryInterface(Components.interfaces.nsIDOMWindow);
+		let wnd = enumerator.getNext().QueryInterface(Ci.nsIDOMWindow);
 		unhook_window(wnd);
 	}
 	/* TODO: remove WindowMediator observer */
