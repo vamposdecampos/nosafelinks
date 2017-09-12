@@ -6,7 +6,7 @@
     <em:name>Clean up safelinks</em:name>
     <em:version>0.1</em:version>
     <em:creator>Alex Badea</em:creator>
-    <em:description>Clean up safelinks URLs</em:description>
+    <em:description>When viewing emails, fix links that were mangled by safelinks.protection.outlook.com.</em:description>
     <em:targetApplication>
       <Description>
         <em:id>{3550f703-e582-4d05-9a08-453d09bdfdc6}</em:id> <!-- Thunderbird -->
