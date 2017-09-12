@@ -40,7 +40,7 @@ function hook_window(wnd) {
 			var bar = wnd.gMessageNotificationBar.msgNotificationBar;
 			var msg = "There were " + cleaned + " link(s) mangled by protection.outlook.com.  Fixed.";
 			bar.appendNotification(msg, "nosafelinks-cleaned", null,
-				bar.PRIORITY_CRITICAL_MEDIUM, []);
+				bar.PRIORITY_INFO_HIGH, []);
 		}
 
 		return this.analyzeMsgForPhishingURLsOriginal(aUrl);
