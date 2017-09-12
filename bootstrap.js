@@ -9,11 +9,16 @@ Cu.importGlobalProperties(["URL"]);
 
 
 function hook_window(wnd) {
-	console.log('nosafelinks: hook window');
+	if (!wnd.gPhishingDetector) {
+		console.log('nosafelinks: hook window: no phishing detector');
+		return;
+	}
+	if (wnd.gPhishingDetector.analyzeMsgForPhishingURLsOriginal) {
+		console.log('nosafelinks: hook window: already hooked');
+		return;
+	}
 	wnd.gPhishingDetector.analyzeMsgForPhishingURLsOriginal = wnd.gPhishingDetector.analyzeMsgForPhishingURLs;
 	wnd.gPhishingDetector.analyzeMsgForPhishingURLs = function(aUrl) {
-		//console.log('nosafelinks: analyze', aUrl);
-
 		var linkNodes = wnd.document.getElementById('messagepane').contentDocument.links;
 		var cleaned = 0;
 		for (var index = 0; index < linkNodes.length; index++) {
@@ -45,6 +50,7 @@ function hook_window(wnd) {
 
 		return this.analyzeMsgForPhishingURLsOriginal(aUrl);
 	}
+	console.log('nosafelinks: hook window');
 }
 function unhook_window(wnd) {
 	let orig = wnd.gPhishingDetector.analyzeMsgForPhishingURLsOriginal;
@@ -74,7 +80,7 @@ function uninstall() {
 	console.log('nosafelinks: uninstall');
 }
 function startup() {
-	console.log('nosafelinks: statup');
+	console.log('nosafelinks: startup');
 
 	let enumerator = Services.wm.getEnumerator('mail:3pane');
 	while (enumerator.hasMoreElements()) {
