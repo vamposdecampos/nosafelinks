@@ -4,7 +4,7 @@
     <em:id>nosafelinks@moof.ro</em:id>
     <em:type>2</em:type>
     <em:name>Clean up safelinks</em:name>
-    <em:version>0.1</em:version>
+    <em:version>0.2</em:version>
     <em:creator>Alex Badea</em:creator>
     <em:description>When viewing emails, fix links that were mangled by safelinks.protection.outlook.com.</em:description>
     <em:targetApplication>

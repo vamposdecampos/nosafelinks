@@ -34,9 +34,12 @@ function hook_window(wnd) {
 			/* verbatim should only be true in plain-text emails */
 			var origURL = hrefURL.searchParams.get('url');
 			var verbatim = link.innerText === link.href;
+			var verbatim_brackets = link.innerText === '<' + link.href + '>';
 			link.href = origURL;
 			if (verbatim)
 				link.innerText = origURL;
+			else if (verbatim_brackets)
+				link.innerText = '<' + origURL + '>';
 			console.log(hrefURL.href, '->', origURL);
 			cleaned++;
 		}
